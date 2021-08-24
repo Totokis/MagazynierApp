@@ -44,5 +44,25 @@ namespace BlazorTest
             
         }
         
+        [Test]
+        public void CheckIsAlmostEmpty()
+        {
+            var machine = new Machine();
+            machine.Capacity = 400;
+            machine.ProductsList = Product.ListOfProductsTypeEmpty_500;
+            Assert.IsTrue(machine.IsAlmostEmpty);
+            
+        }
+        
+        [Test]
+        public void CheckIsFull()
+        {
+            var machine = new Machine();
+            machine.Capacity = 400;
+            machine.ProductsList = Product.ListOfProductsTypeFull_500;
+            Assert.IsTrue(machine.IsFull);
+            
+        }
+        
     }
 }

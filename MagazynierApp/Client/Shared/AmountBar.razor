@@ -2,8 +2,9 @@
  
 
 <div class="progress">
-    <div class="progress-bar progress-bar-striped @barStyle" role="progressbar" aria-valuenow="@Actual" aria-valuemin="0" aria-valuemax="@Max" 
+    <div class="progress-bar progress-bar-striped @barStyle" role="progressbar" aria-valuenow="@Actual" aria-valuemin="0" aria-valuemax="@Max"
          style="width:@((int)(Actual * 100.0 / Max))%">
+        @Actual / @Max
     </div>
 </div>
 

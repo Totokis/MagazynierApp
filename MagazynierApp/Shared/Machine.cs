@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MagazynierApp.Shared
 {
@@ -7,13 +7,15 @@ namespace MagazynierApp.Shared
     {
         public const int MaxCapacity = 1080;
         public const int MinCapacity = 100;
-        
         public int Id { get; set; }
-        
         public string Name { get; set; }
-        
         public string Localization { get; set; }
+        public string ImageUrl { get; set; }
+        public string Description { get; set; }
+        public bool IsAlmostEmpty=>_productsList.Any(product => product.NeedToRefill);
+        public bool IsFull=>_productsList.All(product => product.IsFull);
 
+        int _capacity;
         public int Capacity
         {
             get => _capacity;
@@ -27,11 +29,8 @@ namespace MagazynierApp.Shared
                     _capacity = value;
             }
         }
-
-        public string ImageUrl { get; set; }
         
-        public string Description { get; set; }
-
+        private List<Product> _productsList = new List<Product>(MaxCapacity);
         public List<Product> ProductsList
         {
             get => _productsList;
@@ -45,27 +44,9 @@ namespace MagazynierApp.Shared
                     _productsList = value;
             }
         }
-        private int _capacity;
-        private List<Product> _productsList = new List<Product>(MaxCapacity);
-
-
-        public int CurrentNumberOfProducts
-        {
-            get
-            {
-                return CalculateAmount(ProductsList);
-            }
-        }
-        private int CalculateAmount(List<Product> products)
-        {
-
-            int amount = 0;
-            foreach (var product in products)
-            {
-                amount += product.Quantity;
-            }
-            return amount;
-        }
+        public int CurrentNumberOfProducts => CalculateAmount(ProductsList);
+        static int CalculateAmount(IEnumerable<Product> products) => products.Sum(product => product.Quantity);
+        
     }
 
 }

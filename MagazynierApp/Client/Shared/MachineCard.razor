@@ -1,6 +1,6 @@
 @using MagazynierApp.Shared
 @using System.Globalization
- <div class="card mb-3" style="max-width: 600px;">
+ <div class="card @_cardBorder mb-3" style="max-width: 600px;">
      <div class="row no-gutters">
          <div class="col-4">
              <img src=@Machine.ImageUrl class="card-img" alt="...">
@@ -8,7 +8,7 @@
          <div class="col-8">
              <div class="card-header">
                  <span>
-                     <h5 class="card-title" style="display: inline">@Machine.Name</h5>
+                     <h5 class="card-title @(Machine.IsAlmostEmpty?"text-danger":"")" style="display: inline">@Machine.Name</h5>
                      <i class="oi oi-map-marker"></i><h6 style="display: inline"> @Machine.Localization</h6>
                  </span>
              </div>
@@ -27,7 +27,16 @@
                          </div>
                          <div class="btn-group-sm" role="group">
                              <button type="button" class="mt-1 btn btn-outline-secondary"> Przejdź do szczegółów</button>
-                             <button type="button" class="mt-1 mr-1 btn btn-outline-primary" data-toggle="collapse" @onclick="@(() => { IsVisible = !IsVisible; })"> Kliknij aby rozwinąć</button>
+                             <button type="button" class="mt-1 mr-1 btn btn-outline-primary" data-toggle="collapse" @onclick="@(() => { IsVisible = !IsVisible; })">
+                               @if (IsVisible)
+                               {
+                                   <div>Kliknij aby zwinąć</div>
+                               }
+                               else
+                               {
+                                   <div>Kliknij aby rozwinąć</div>
+                               }
+                             </button>
                          </div>
                      </li>
 
@@ -53,17 +62,22 @@
               </ul>
          </div>
      </div>
-     
-            </div>
+ </div>
 
 @code {
 
     [Parameter]public Machine Machine { get; set; }
-    protected bool IsVisible { get; set; }
-
+    bool IsVisible { get; set; }
+    string _cardBorder;
     DateTime _lastUpdated;
     protected override void OnInitialized()
     {
         _lastUpdated = DateTime.Now;
+        _cardBorder = "border-primary";
+        if (Machine.IsFull)
+            _cardBorder = "border-success";
+        if(Machine.IsAlmostEmpty) 
+            _cardBorder = "border-danger";
+        
     }
 }

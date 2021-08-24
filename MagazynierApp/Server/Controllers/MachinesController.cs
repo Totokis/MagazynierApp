@@ -35,7 +35,7 @@ namespace MagazynierApp.Server.Controllers
                 Localization = "KGHM",
                 Capacity = 600,
                 ImageUrl = "img/machines/D540.png",
-                ProductsList = Product.ListOfProductsType1_500
+                ProductsList = Product.ListOfProductsTypeEmpty_500
             },
             new Machine
             {
@@ -44,7 +44,7 @@ namespace MagazynierApp.Server.Controllers
                 Localization = "Ekookna",
                 Capacity = 700,
                 ImageUrl = "img/machines/F80.png",
-                ProductsList = Product.ListOfProductsType1_500
+                ProductsList = Product.ListOfProductsTypeFull_500
             },
             new Machine
             {
