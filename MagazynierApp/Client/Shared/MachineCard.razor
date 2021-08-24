@@ -1,0 +1,69 @@
+@using MagazynierApp.Shared
+@using System.Globalization
+ <div class="card mb-3" style="max-width: 600px;">
+     <div class="row no-gutters">
+         <div class="col-4">
+             <img src=@Machine.ImageUrl class="card-img" alt="...">
+         </div>
+         <div class="col-8">
+             <div class="card-header">
+                 <span>
+                     <h5 class="card-title" style="display: inline">@Machine.Name</h5>
+                     <i class="oi oi-map-marker"></i><h6 style="display: inline"> @Machine.Localization</h6>
+                 </span>
+             </div>
+             <div class="card-body">
+                 <ul class="list-group list-group-flush">
+                     <li class="list-group-item">
+                         Jakiś opis dodatkowy
+                     </li>
+                     <li class="list-group-item">
+                         <div class="progress">
+                             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="@Machine.CurrentNumberOfProducts" aria-valuemin="0" aria-valuemax="@Machine.Capacity"
+                                  style="width:@((int)(Machine.CurrentNumberOfProducts * 100.0 / Machine.Capacity))%; display:inline;"
+                                  data-toggle="collapse" @onclick="@(() => { IsVisible = !IsVisible; })">
+                                 @Machine.CurrentNumberOfProducts / @Machine.Capacity
+                             </div>
+                         </div>
+                         <div class="btn-group-sm" role="group">
+                             <button type="button" class="mt-1 btn btn-outline-secondary"> Przejdź do szczegółów</button>
+                             <button type="button" class="mt-1 mr-1 btn btn-outline-primary" data-toggle="collapse" @onclick="@(() => { IsVisible = !IsVisible; })"> Kliknij aby rozwinąć</button>
+                         </div>
+                     </li>
+
+                 </ul>
+             </div>
+             <p class="card-text"><small class="text-muted">Ostatnio zakutalizowano: @_lastUpdated.ToShortTimeString().ToString(CultureInfo.CurrentCulture)</small></p>
+         </div>
+                    
+     </div>
+     <div class="row no-gutters collapse @(IsVisible ? "show" : "")">
+         <div class="col-md-12">
+              <ul class="list-group list-group-flush">
+                  @foreach (var product in Machine.ProductsList)
+                  {
+                      <li class="list-group-item">
+                          <img src="@product.ImageUrl" style="display: inline"/> @product.Name
+                          <AmountBar 
+                              Actual="@product.Quantity"
+                              Max="@product.MaxQuantity"
+                              />
+                      </li>
+                  }
+              </ul>
+         </div>
+     </div>
+     
+            </div>
+
+@code {
+
+    [Parameter]public Machine Machine { get; set; }
+    protected bool IsVisible { get; set; }
+
+    DateTime _lastUpdated;
+    protected override void OnInitialized()
+    {
+        _lastUpdated = DateTime.Now;
+    }
+}

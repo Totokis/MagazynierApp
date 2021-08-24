@@ -1,0 +1,25 @@
+@using MagazynierApp.Shared
+ 
+
+<div class="progress">
+    <div class="progress-bar progress-bar-striped @barStyle" role="progressbar" aria-valuenow="@Actual" aria-valuemin="0" aria-valuemax="@Max" 
+         style="width:@((int)(Actual * 100.0 / Max))%">
+    </div>
+</div>
+
+@code {
+    [Parameter] public int Max { get; set; }
+    [Parameter] public int Actual { get; set; }
+
+    string barStyle = "";
+
+    protected override void OnInitialized()
+    {
+        if (Actual*100.0 / Max >= 50)
+            barStyle = "bg-success";
+        else if(Actual*100.0/Max < 50 && Actual*100.0/Max >=20)
+            barStyle = "bg-warning";
+        else if(Actual*100.0/Max < 20)
+            barStyle = "bg-danger";
+    }
+}
