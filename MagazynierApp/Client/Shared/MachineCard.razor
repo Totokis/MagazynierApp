@@ -1,6 +1,6 @@
 @using MagazynierApp.Shared
 @using System.Globalization
- <div class="card @_cardBorder mb-3" style="max-width: 600px;">
+ <div class="card @_cardBorder mb-2 mx-2" style="max-width: 600px;">
      <div class="row no-gutters">
          <div class="col-4">
              <img src=@Machine.ImageUrl class="card-img" alt="...">
@@ -9,7 +9,11 @@
              <div class="card-header">
                  <span>
                      <h5 class="card-title @(Machine.IsAlmostEmpty?"text-danger":"")" style="display: inline">@Machine.Name</h5>
-                     <i class="oi oi-map-marker"></i><h6 style="display: inline"> @Machine.Localization</h6>
+                     <i class="oi oi-map-marker" style="@(Machine.IsAlmostEmpty?"color: #dc3545!important":"")"></i><h6 class="card-text @(Machine.IsAlmostEmpty?"text-danger":"")" style="display: inline"> @Machine.Localization</h6>
+                     @if (Machine.IsAlmostEmpty)
+                     {
+                         <i class="ml-3 oi oi-warning" style="color: #dc3545!important"></i>   
+                     }
                  </span>
              </div>
              <div class="card-body">
@@ -27,7 +31,7 @@
                          </div>
                          <div class="btn-group-sm" role="group">
                              <button type="button" class="mt-1 btn btn-outline-secondary"> Przejdź do szczegółów</button>
-                             <button type="button" class="mt-1 mr-1 btn btn-outline-primary" data-toggle="collapse" @onclick="@(() => { IsVisible = !IsVisible; })">
+                             <button type="button" class="mt-1 mr-1 btn @(Machine.IsAlmostEmpty?"btn-outline-danger":"btn-outline-primary")" data-toggle="collapse" @onclick="@(() => { IsVisible = !IsVisible; })">
                                @if (IsVisible)
                                {
                                    <div>Kliknij aby zwinąć</div>
@@ -53,10 +57,7 @@
                   {
                       <li class="list-group-item">
                           <img src="@product.ImageUrl" style="display: inline"/> @product.Name
-                          <AmountBar 
-                              Actual="@product.Quantity"
-                              Max="@product.MaxQuantity"
-                              />
+                          <AmountBar Product="product"/>
                       </li>
                   }
               </ul>

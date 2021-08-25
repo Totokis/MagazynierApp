@@ -2,25 +2,29 @@
  
 
 <div class="progress">
-    <div class="progress-bar progress-bar-striped @barStyle" role="progressbar" aria-valuenow="@Actual" aria-valuemin="0" aria-valuemax="@Max"
-         style="width:@((int)(Actual * 100.0 / Max))%">
-        @Actual / @Max
+    <div class="progress-bar progress-bar-striped @_barStyle @(Product.NeedToRefill?"progress-bar-animated":"") " role="progressbar" aria-valuenow="@_actual" aria-valuemin="0" aria-valuemax="@_max"
+         style="width:@((int)(_actual * 100.0 / _max))%">
+        @_actual / @_max
     </div>
 </div>
 
 @code {
-    [Parameter] public int Max { get; set; }
-    [Parameter] public int Actual { get; set; }
+    [Parameter] public Product Product { get; set; }
 
-    string barStyle = "";
+    int _max;
+    int _actual;
+    string _barStyle = "";
 
     protected override void OnInitialized()
     {
-        if (Actual*100.0 / Max >= 50)
-            barStyle = "bg-success";
-        else if(Actual*100.0/Max < 50 && Actual*100.0/Max >=20)
-            barStyle = "bg-warning";
-        else if(Actual*100.0/Max < 20)
-            barStyle = "bg-danger";
+        _max = Product.MaxQuantity;
+        _actual = Product.Quantity;
+        
+        if (_actual*100.0 / _max >= 50)
+            _barStyle = "bg-success";
+        else if(_actual*100.0/_max < 50 && _actual*100.0/_max >=20)
+            _barStyle = "bg-warning";
+        else if(_actual*100.0/_max < 20)
+            _barStyle = "bg-danger";
     }
 }
