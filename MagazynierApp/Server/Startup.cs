@@ -29,6 +29,7 @@ namespace MagazynierApp.Server
 
             services.Configure<VapidConfiguration>(Configuration.GetSection("VAPID"));
             services.AddControllers();
+            services.AddSingleton<INotificationManager,MachineNotificationManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
