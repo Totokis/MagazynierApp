@@ -1,6 +1,34 @@
 @page "/AlertHistory"
+@using MagazynierApp.Shared
+@inject HttpClient HttpClient
 <h3>Historia Alertów</h3>
-<h2>TODO: Fetch alerts from database</h2>
-@code {                                                                            
-    
+
+@if (_alerts != null)
+{
+    @foreach (var alert in _alerts)
+    {
+        <div class="card border-danger mx-3" style="max-width: 18rem;">
+            <div class="card-header">@alert.Title</div>
+            <div class="card-body text-danger">
+                <h5 class="card-title">@alert.AlertTime.ToShortTimeString()</h5>
+                <p class="card-text">@alert.Message</p>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <p>Loading</p>
+}
+
+
+
+
+@code {
+    private List<MachineWarningNotification> _alerts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _alerts = await HttpClient.GetFromJsonAsync<List<MachineWarningNotification>>("alerts");
+    }
 }
