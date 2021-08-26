@@ -35,7 +35,7 @@ namespace MagazynierApp.Server
             foreach (var machine in machines)
             {
                 if(machine.IsAlmostEmpty)
-                    _notificationManager.AddNotification(new MachineNotification(machine));
+                    _notificationManager.AddNotification(new MachineWarningNotification(machine));
             }
             _notificationManager.SendNotification();
         }
