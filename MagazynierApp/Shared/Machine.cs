@@ -45,6 +45,21 @@ namespace MagazynierApp.Shared
             }
         }
         public int CurrentNumberOfProducts => CalculateAmount(ProductsList);
+
+        public List<Product> ProductsToRefill
+        {
+            get
+            {
+                var productsToRefill = new List<Product>();
+                foreach (var product in ProductsList)
+                {
+                    if(product.NeedToRefill)
+                        productsToRefill.Add(product);
+                }
+                return productsToRefill;
+            }
+        }
+
         static int CalculateAmount(IEnumerable<Product> products) => products.Sum(product => product.Quantity);
         
     }
