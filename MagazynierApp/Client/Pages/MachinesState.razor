@@ -1,0 +1,28 @@
+@page "/MachinesState"
+@using MagazynierApp.Shared
+@inject HttpClient HttpClient
+<h3>MachinesState</h3>
+
+<div class="main">
+    @if (_machinesList != null)
+    {
+        @foreach (var machine in _machinesList)
+        {
+            <MachinePanel Machine="machine"/>
+        }
+    }
+    else
+    {
+        <p><em>Loading...</em></p>
+    }
+</div>
+
+@code
+{
+    private Machine[] _machinesList;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        _machinesList = await HttpClient.GetFromJsonAsync<Machine[]>("machines");
+    }
+}

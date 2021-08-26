@@ -1,0 +1,31 @@
+@using MagazynierApp.Shared
+@inject HttpClient HttpClient
+
+<div class="card" style="max-width: 600px;">
+  <img class="card-img-top" src=@Machine.ImageUrl alt="Card image cap">
+  <ul class="list-group list-group-flush">
+      @foreach (var product in Machine.ProductsList)
+      {
+          <li class="list-group-item">
+              <span>@product.Name</span>
+              <input type="range" style="color: @(product.Quantity==0?"red":product.Quantity==product.MaxQuantity?"green":"blue")" min="@product.MinQuantity" max="@product.MaxQuantity" step="1" @bind="product.Quantity" @bind:event="oninput">
+              <span>@product.Quantity / @product.MaxQuantity</span>
+          </li>
+      }
+  </ul>
+    <div class="card-body">
+        <h5 class="card-title">@Machine.Name</h5>
+        <a class="btn btn-primary" @onclick="SaveMachineState">Save</a>
+    </div>
+</div>
+
+@code {
+
+    [Parameter] public Machine Machine { get; set; }
+
+    async Task SaveMachineState()
+    {
+        var response = await HttpClient.PutAsJsonAsync("machines", Machine);
+        response.EnsureSuccessStatusCode();
+    }
+}

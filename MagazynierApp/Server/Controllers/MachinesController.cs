@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using MagazynierApp.Shared;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace MagazynierApp.Server.Controllers
 {
@@ -73,6 +71,12 @@ namespace MagazynierApp.Server.Controllers
         public IEnumerable<Machine> Get()
         {
             return ListOfMachines;
+        }
+
+        [HttpPut]
+        public void UpdateMachines(Machine machine)
+        {
+            ListOfMachines[machine.Id-1] = machine;
         }
     }
 }
