@@ -2,6 +2,8 @@
 @using MagazynierApp.Shared
 @using System.Globalization
 @inject HttpClient HttpClient
+@inject IJSRuntime JSRuntime
+@inject User User
 
 <h3>Moje maszyny</h3>
 
@@ -27,7 +29,23 @@
     {
         _machinesList = await HttpClient.GetFromJsonAsync<Machine[]>("machines");
         _lastUpdated = DateTime.Now;
+        _ = RequestNotificationSubscriptionAsync();
     }
     
+    async Task RequestNotificationSubscriptionAsync()
+    {
+        var subscription = await JSRuntime.InvokeAsync<NotificationSubscription>("blazorPushNotifications.requestSubscription");
+        if (subscription != null)
+        {
+            try
+            {
+                await User.SubscribeToNotifications(subscription);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+        }
+    }
     
 }
