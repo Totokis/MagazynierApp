@@ -28,7 +28,7 @@ namespace MagazynierApp.Server.Controllers
         public async void Subscribe(NotificationSubscription subscription)
         {
             var userId = GetUserId();
-            foreach (var notificationSubscription in SubscriptionsStorage.ToArray())
+            foreach (var notificationSubscription in SubscriptionsStorage.ToArray())//TODO add database
             {
                 if (notificationSubscription.UserId == userId)
                     SubscriptionsStorage.Remove(notificationSubscription);
@@ -36,19 +36,8 @@ namespace MagazynierApp.Server.Controllers
             subscription.UserId = userId;
             SubscriptionsStorage.Add(subscription);
             Console.WriteLine("Subscription Added !");
-            await SendNotificationToAll();
-           
-
         }
-        private async Task SendNotificationToAll()
-        {
-            foreach (var subscription in SubscriptionsStorage)
-            {
-                await SendNotificationAsync(subscription);
-            }
-            await SendNotificationToAll();
-        }
-
+        
         private async Task SendNotificationAsync(NotificationSubscription subscription)
         {
             await Task.Delay(10_000);
