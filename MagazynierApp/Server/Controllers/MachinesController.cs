@@ -11,7 +11,7 @@ namespace MagazynierApp.Server.Controllers
     public class MachinesController: Controller
     {
 
-        Machine[] listOfMachines = { 
+        public static Machine[] ListOfMachines = { 
             new Machine
             {
                 Id = 1,
@@ -72,7 +72,7 @@ namespace MagazynierApp.Server.Controllers
         [HttpGet]
         public IEnumerable<Machine> Get()
         {
-            return listOfMachines;
+            return ListOfMachines;
         }
     }
 }
