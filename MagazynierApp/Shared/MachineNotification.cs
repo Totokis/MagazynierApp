@@ -2,7 +2,7 @@ using System;
 
 namespace MagazynierApp.Shared
 {
-    public class MachineNotification
+    public class MachineNotification: INotification
     {
         public string MachineName { get; set; }
 
@@ -17,5 +17,10 @@ namespace MagazynierApp.Shared
         public DateTime AlertTime { get; set; }
 
         public string Message { get; set; }
+
+        public MachineNotification(Machine machine)
+        {
+            
+        }
     }
 }
