@@ -23,12 +23,10 @@
 
 @code {
     Machine[] _machinesList;
-    DateTime _lastUpdated;
-    
+
     protected override async Task OnInitializedAsync()
     {
         _machinesList = await HttpClient.GetFromJsonAsync<Machine[]>("machines");
-        _lastUpdated = DateTime.Now;
         _ = RequestNotificationSubscriptionAsync();
     }
     
