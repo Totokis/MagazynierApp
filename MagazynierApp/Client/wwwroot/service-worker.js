@@ -12,9 +12,9 @@ self.addEventListener('fetch', event => {
 self.addEventListener('push', event => {
     const payload = event.data.json();
     event.waitUntil(
-        self.registration.showNotification('Magazynier App', {
+        self.registration.showNotification(payload.title, {
             body: payload.message,
-            icon: 'icon-512.png',
+            icon: payload.iconUrl,
             vibrate: [100, 50, 100],
         })
     );
