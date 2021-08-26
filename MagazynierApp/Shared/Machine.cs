@@ -48,5 +48,4 @@ namespace MagazynierApp.Shared
         static int CalculateAmount(IEnumerable<Product> products) => products.Sum(product => product.Quantity);
         
     }
-
 }

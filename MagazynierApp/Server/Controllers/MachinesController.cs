@@ -10,13 +10,6 @@ namespace MagazynierApp.Server.Controllers
     [ApiController]
     public class MachinesController: Controller
     {
-        private readonly ILogger<MachinesController> logger;
-        
-
-        public MachinesController(ILogger<MachinesController> logger)
-        {
-            this.logger = logger;
-        }
 
         Machine[] listOfMachines = { 
             new Machine
