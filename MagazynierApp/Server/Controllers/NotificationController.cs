@@ -19,7 +19,7 @@ namespace MagazynierApp.Server.Controllers
 
 
         [HttpPut("subscribe")]
-        public async void Subscribe(NotificationSubscription subscription)
+        public void Subscribe(NotificationSubscription subscription)
         {
             var userId = GetUserId();
             foreach (var notificationSubscription in SubscriptionsStorage.ToArray())//TODO add database
