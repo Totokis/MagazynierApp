@@ -15,15 +15,9 @@ namespace MagazynierApp.Server.Controllers
     [ApiController]
     public class NotificationController : Controller
     {
-        private readonly VapidConfiguration _vapidConfiguration;
         public static List<NotificationSubscription> SubscriptionsStorage = new List<NotificationSubscription>();
 
-        public NotificationController(IOptions<VapidConfiguration> vapidConfiguration)
-        {
-            _vapidConfiguration = vapidConfiguration.Value;
-        }
-        
-        
+
         [HttpPut("subscribe")]
         public async void Subscribe(NotificationSubscription subscription)
         {
@@ -38,27 +32,6 @@ namespace MagazynierApp.Server.Controllers
             Console.WriteLine("Subscription Added !");
         }
         
-        private async Task SendNotificationAsync(NotificationSubscription subscription)
-        {
-            await Task.Delay(10_000);
-            string message = "Otrzymałeś testowe powiadomienie, które zostanie wysłane ponownie za 10 sekund !";
-            var publicKey = _vapidConfiguration.PublicKey;
-            var privateKey = _vapidConfiguration.PrivateKey;
-
-            var pushSubscription = new PushSubscription(subscription.Url, subscription.P256dh, subscription.Auth);
-            var vapidDetails = new VapidDetails(_vapidConfiguration.Subject, publicKey, privateKey);
-            var webPushClient = new WebPushClient();
-            try
-            {
-                var payload = JsonConvert.SerializeObject(new {message });
-                await webPushClient.SendNotificationAsync(pushSubscription, payload, vapidDetails);
-                Console.WriteLine("Notification send");
-            }
-            catch (Exception e)
-            {
-                Console.Error.WriteLine("Error sending push notification: "+ e.Message);
-            }
-        }
         
         private string GetUserId()
         {
