@@ -8,6 +8,11 @@ namespace MagazynierApp.Server.Controllers
     [ApiController]
     public class MachinesController: Controller
     {
+        ApplicationStoreContext _db;
+        public MachinesController(ApplicationStoreContext db)
+        {
+            _db = db;
+        }
 
         public static Machine[] ListOfMachines = { 
             new Machine

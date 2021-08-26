@@ -14,7 +14,13 @@ namespace MagazynierApp.Shared
             DistributionPoint = machine.Localization;
             AlertTime = DateTime.Now;
         }
-        
+
+        public MachineWarningNotification()
+        {
+            
+        }
+
+        public int Id { get; set; }
 
         public string MachineName { get; set; }
 

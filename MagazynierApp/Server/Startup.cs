@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using MagazynierApp.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace MagazynierApp.Server
 {
@@ -28,8 +29,10 @@ namespace MagazynierApp.Server
             services.AddRazorPages();
 
             services.Configure<VapidConfiguration>(Configuration.GetSection("VAPID"));
-            services.AddControllers();
             services.AddSingleton<INotificationManager,MachineNotificationManager>();
+            services.AddDbContext<ApplicationStoreContext>(options => options.UseSqlite("Data Source=magazyn.db"));
+            
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

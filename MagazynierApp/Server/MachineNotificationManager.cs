@@ -28,8 +28,6 @@ namespace MagazynierApp.Server
                 MachineNotifications.Add(tempMachineNotification);
                 Console.WriteLine("Notification added");
             }
-           
-         
         }
         
         public async Task SendNotification()
